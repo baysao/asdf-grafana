@@ -7,7 +7,7 @@ _install() {
 	local install_path=$3
 	tmpd=$(mktemp -d)
 	cd $tmpd
-	source_path="https://dl.grafana.com/oss/release/grafana-$(version).linux-amd64.tar.gz"
+	source_path="https://dl.grafana.com/oss/release/grafana-${version}.linux-amd64.tar.gz"
 	curl -L $source_path -o ${version}.tar.gz
 	tar -xzf ${version}.tar.gz
 	rm ${version}.tar.gz
