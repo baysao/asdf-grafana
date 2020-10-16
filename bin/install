@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+_install() {
+	local install_type=$1
+	local version=$2
+	version=$(echo $version | sed 's/^v//')
+	local install_path=$3
+	tmpd=$(mktemp -d)
+	cd $tmpd
+	source_path="https://dl.grafana.com/oss/release/grafana-$(version).linux-amd64.tar.gz"
+	curl -L $source_path -o ${version}.tar.gz
+	tar -xzf ${version}.tar.gz
+	rm ${version}.tar.gz
+	mv ./grafana-$(version)/* $install_path/
+
+	rm -rf $tmpd
+}
+
+_install $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
