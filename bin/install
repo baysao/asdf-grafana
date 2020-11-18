@@ -11,8 +11,7 @@ _install() {
 	curl -L $source_path -o ${version}.tar.gz
 	tar -xzf ${version}.tar.gz
 	rm ${version}.tar.gz
-	mv ./grafana-${version}/* /usr/local
-	#$install_path/
+	mv ./grafana-${version}/* $install_path/
 
 	rm -rf $tmpd
 }
