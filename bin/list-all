@@ -1,2 +1,16 @@
 #!/usr/bin/env bash
-echo $(curl -s https://api.github.com/repos/grafana/grafana/releases | grep -oP '"tag_name": "\K(.*)(?=")') | sort
+
+release_path=https://api.github.com/repos/grafana/grafana/releases
+cmd="curl -s $release_path"
+
+function sort_versions() {
+  sed 'h; s/[+-]/./g; s/.p\([[:digit:]]\)/.z\1/; s/$/.z/; G; s/\n/ /' | \
+    LC_ALL=C sort -t. -k 1,1 -k 2,2n -k 3,3n -k 4,4n -k 5,5n | awk '{print $2}'
+}
+
+list_versions() {
+  echo "$(eval $cmd | grep -oE "tag_name\": *\"v.*\"," | sed 's/tag_name\": *\"v//;s/\",//')"
+}
+
+echo "$(list_versions | sort_versions | tr '\n' ' ')"
+
